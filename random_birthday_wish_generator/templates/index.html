@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Quicksand&display=swap" rel="stylesheet">
+    <title>Quantum Birthday Wish Generator</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #87CEEB 0%, #B0E0E6 100%); /* Sky gradient background */
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            justify-content: flex-start; /* Content aligned to the left */
+            align-items: flex-start;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative; /* For positioning the image */
+        }
+
+        h1 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+            margin-left: 50px; /* Shifted to the left */
+            margin-top: 150px; /* Moved down */
+        }
+
+        .wish-box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 25px;
+            border: 5px solid #ff6f61;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            color: black;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            margin-left: 50px; /* Shifted to the left */
+            margin-top: -20px; /* Moved down */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wish-box::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: rgba(255, 228, 225, 0.7);
+            border-radius: 25px;
+            z-index: -1;
+        }
+
+        .wish {
+            font-size: 1.5em;
+            padding: 10px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #ff6f61;
+            color: white;
+            border: 2px solid #ff3f30;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: 50px; /* Shifted to the left */
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff3f30;
+            transform: scale(1.05);
+            border: 2px solid #ff6f61;
+        }
+
+        .star {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            background-color: yellow;
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Style for the image */
+        .side-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30vw; /* Adjust width as needed */
+            height: 100vh; /* Full height */
+            object-fit: cover; /* Ensure the image covers the full height */
+            z-index: -1; /* Behind other elements */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello Mayman!</h1> <!-- Changed greeting -->
+        <div class="wish-box">
+            <p class="wish">{{ wish }}</p>
+        </div>
+        <button onclick="location.reload();">Get Another Wish!</button>
+    </div>
+
+    <!-- Image spanning from top to bottom -->
+    <img src="{{ url_for('static', filename='download.jpg') }}" alt="Birthday Image" class="side-image">
+
+    <script>
+        // Function to create stars in random positions
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            // Randomize position within the viewport but avoid the right side where the image is
+            let topPosition = Math.random() * 100;
+            let leftPosition = Math.random() * 70; // Limit stars to the left 70% of the screen
+            
+            star.style.top = topPosition + 'vh';
+            star.style.left = leftPosition + 'vw';
+            
+            document.body.appendChild(star);
+        }
+    
+        // Create exactly 5 stars
+        for (let i = 0; i < 5; i++) {
+            createStar();
+        }
+    </script>
+    
+</body>
+</html>
